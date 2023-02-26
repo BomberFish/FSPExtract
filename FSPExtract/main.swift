@@ -21,11 +21,15 @@ if arg1 == "--help" {
     print("ERROR: No file specified.")
     print("Usage: fspextract /path/to/file")
 } else {
-    print("Extracting...\n")
-    // FIXME: hardcoded
-    try Zip.unzipFile(URL.init(fileURLWithPath: "/Users/hariz/file.fsp"), destination: URL.init(fileURLWithPath: "/Users/hariz"), overwrite: true, password: "aVBob25l5oyB44Gj44Gm6LuK5Lit5rOK44Gu5peF44Gr6KGM44GN44Gf44GE44Gq44CC44GC44Gj44Gf44GL44GE44Gf44G+44GU44KC6aOf44G544Gf44GE44GX44CC", progress: { (progress) -> () in
+    Zip.addCustomFileExtension("fsp")
+    let manager = FileManager.default
+    let extract_dir = "\(NSHomeDirectory())/fsp_extracted"
+    try manager.createDirectory(atPath: extract_dir, withIntermediateDirectories: true, attributes: nil)
+    print("Extracting to \(extract_dir)...\n")
+    try Zip.unzipFile(URL.init(fileURLWithPath: arg1), destination: URL.init(fileURLWithPath: extract_dir), overwrite: true, password: "aVBob25l5oyB44Gj44Gm6LuK5Lit5rOK44Gu5peF44Gr6KGM44GN44Gf44GE44Gq44CC44GC44Gj44Gf44GL44GE44Gf44G+44GU44KC6aOf44G544Gf44GE44GX44CC", progress: { (progress) -> () in
         print(progress)
         
     })
-    print("Done!")
+    print("\nDone!")
+    print("Extracted to: \(extract_dir)")
 }
